@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { label, address, landmark, city, state, pincode, isDefault } = body;
+    const { label, address, landmark, city, state, pincode, phone, isDefault } = body;
 
     if (!label || !address || !city || !state || !pincode) {
       return NextResponse.json({ success: false, error: "Missing required fields" }, { status: 400 });
@@ -68,6 +68,7 @@ export async function POST(request: Request) {
           city,
           state,
           pincode,
+          phone: phone || null,
           isDefault: finalIsDefault,
         })
         .returning();

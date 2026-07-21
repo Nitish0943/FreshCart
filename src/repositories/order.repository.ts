@@ -49,6 +49,7 @@ export class OrderRepository {
         firstName: users.firstName,
         lastName: users.lastName,
         phone: users.phone,
+        addressPhone: addresses.phone,
         address: addresses.address,
         landmark: addresses.landmark,
         city: addresses.city,
@@ -64,7 +65,7 @@ export class OrderRepository {
     return results.map((o) => ({
       ...o,
       deliveryName: `${o.firstName || ""} ${o.lastName || ""}`.trim() || "Customer",
-      deliveryPhone: o.phone || "—",
+      deliveryPhone: o.addressPhone || o.phone || "—",
       deliveryAddress: `${o.address}${o.landmark ? `, ${o.landmark}` : ""}, ${o.city}, ${o.state} - ${o.pincode}`,
     }));
   }
@@ -85,6 +86,7 @@ export class OrderRepository {
         firstName: users.firstName,
         lastName: users.lastName,
         phone: users.phone,
+        addressPhone: addresses.phone,
         address: addresses.address,
         landmark: addresses.landmark,
         city: addresses.city,
@@ -117,7 +119,7 @@ export class OrderRepository {
     return {
       ...orderResult,
       deliveryName: `${orderResult.firstName || ""} ${orderResult.lastName || ""}`.trim() || "Customer",
-      deliveryPhone: orderResult.phone || "—",
+      deliveryPhone: orderResult.addressPhone || orderResult.phone || "—",
       deliveryAddress: `${orderResult.address}${orderResult.landmark ? `, ${orderResult.landmark}` : ""}, ${orderResult.city}, ${orderResult.state} - ${orderResult.pincode}`,
       items,
     };

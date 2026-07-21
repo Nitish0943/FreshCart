@@ -32,6 +32,7 @@ export default function CheckoutPage() {
   const [newCity, setNewCity] = useState("");
   const [newState, setNewState] = useState("");
   const [newPincode, setNewPincode] = useState("");
+  const [newPhone, setNewPhone] = useState("");
   const [addressLoading, setAddressLoading] = useState(false);
 
   // Fetch addresses inline using TanStack Query
@@ -72,6 +73,7 @@ export default function CheckoutPage() {
           city: newCity,
           state: newState,
           pincode: newPincode,
+          phone: newPhone,
           isDefault: addresses.length === 0 ? 1 : 0,
         }),
       });
@@ -84,6 +86,7 @@ export default function CheckoutPage() {
         setNewCity("");
         setNewState("");
         setNewPincode("");
+        setNewPhone("");
         setShowAddAddressModal(false);
       }
     } catch (err) {
@@ -209,6 +212,11 @@ export default function CheckoutPage() {
                           <p className="text-xs text-muted-foreground leading-relaxed font-semibold pt-1">
                             {addr.city}, {addr.state} - {addr.pincode}
                           </p>
+                          {addr.phone && (
+                            <p className="text-xs text-emerald-700 font-bold pt-1">
+                              📞 {addr.phone}
+                            </p>
+                          )}
                         </div>
                         
                         {isSelected && (
@@ -491,6 +499,20 @@ export default function CheckoutPage() {
                   placeholder="10001"
                   value={newPincode}
                   onChange={(e) => setNewPincode(e.target.value)}
+                  className="rounded-xl border-emerald-100 bg-card focus-visible:ring-emerald-500"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider block">
+                  Contact Mobile Number (For Delivery Driver)
+                </label>
+                <Input
+                  required
+                  type="tel"
+                  placeholder="+91 98765 43210"
+                  value={newPhone}
+                  onChange={(e) => setNewPhone(e.target.value)}
                   className="rounded-xl border-emerald-100 bg-card focus-visible:ring-emerald-500"
                 />
               </div>

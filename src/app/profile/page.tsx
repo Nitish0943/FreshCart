@@ -24,6 +24,7 @@ export default function ProfilePage() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [pincode, setPincode] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -63,6 +64,7 @@ export default function ProfilePage() {
           city,
           state,
           pincode,
+          phone,
           isDefault: addresses.length === 0, // auto default if first address
         }),
       });
@@ -77,6 +79,7 @@ export default function ProfilePage() {
         setCity("");
         setState("");
         setPincode("");
+        setPhone("");
       }
     } catch (err) {
       console.error(err);
@@ -197,6 +200,11 @@ export default function ProfilePage() {
                     <p className="text-sm font-semibold text-foreground pt-1.5">
                       {addr.city}, {addr.state} - {addr.pincode}
                     </p>
+                    {addr.phone && (
+                      <p className="text-xs font-bold text-emerald-700 pt-1">
+                        📞 Delivery Phone: {addr.phone}
+                      </p>
+                    )}
                   </div>
 
                   <div className="flex items-center justify-between pt-4 border-t border-emerald-50/50">
@@ -293,6 +301,17 @@ export default function ProfilePage() {
                   value={pincode}
                   onChange={(e) => setPincode(e.target.value)}
                   placeholder="110001"
+                  required
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-foreground block">Delivery Contact Mobile Number</label>
+                <Input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="+91 98765 43210"
                   required
                 />
               </div>

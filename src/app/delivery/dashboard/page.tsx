@@ -130,12 +130,20 @@ export default function DeliveryDashboardPage() {
                                 className="flex justify-between items-center cursor-pointer"
                                 onClick={() => setExpandedOrderId(isExpanded ? null : order.id)}
                               >
-                                <div className="space-y-0.5">
+                                <div className="space-y-1 min-w-0 flex-1 pr-3">
                                   <span className="text-[10px] font-bold font-mono text-muted-foreground">ID: {order.id.substring(0, 8)}...</span>
-                                  <h4 className="font-bold text-foreground text-sm">{order.deliveryName}</h4>
+                                  <h4 className="font-extrabold text-foreground text-sm flex items-center gap-2">
+                                    {order.deliveryName || "Customer"}
+                                  </h4>
+                                  {order.deliveryPhone && order.deliveryPhone !== "—" && (
+                                    <div className="flex items-center gap-1.5 text-xs text-emerald-700 font-bold">
+                                      <span>📞</span>
+                                      <span>{order.deliveryPhone}</span>
+                                    </div>
+                                  )}
                                   <p className="text-xs text-muted-foreground truncate max-w-[200px] md:max-w-md">{order.deliveryAddress}</p>
                                 </div>
-                                <div className="text-right flex items-center gap-3">
+                                <div className="text-right flex flex-col items-end gap-1.5 shrink-0">
                                   <span className="text-sm font-extrabold text-foreground">₹{order.totalAmount.toFixed(2)}</span>
                                   <span className={`inline-flex rounded-full px-2 py-0.5 text-[9px] font-bold uppercase ${
                                     isDelivered
@@ -156,13 +164,22 @@ export default function DeliveryDashboardPage() {
                                     <p className="text-muted-foreground leading-relaxed">{order.deliveryAddress}</p>
                                   </div>
 
-                                  <div className="flex gap-2">
-                                    <a href={`tel:${order.deliveryPhone}`} className="flex-1">
-                                      <Button className="w-full rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 hover:bg-emerald-100 font-semibold gap-1.5 flex items-center justify-center text-xs">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-4 w-4">
+                                  <div className="flex gap-2 pt-1">
+                                    <a
+                                      href={order.deliveryPhone && order.deliveryPhone !== "—" ? `tel:${order.deliveryPhone}` : "#"}
+                                      onClick={(e) => {
+                                        if (!order.deliveryPhone || order.deliveryPhone === "—") {
+                                          e.preventDefault();
+                                          alert("No contact phone number provided for this order.");
+                                        }
+                                      }}
+                                      className="w-full"
+                                    >
+                                      <Button className="w-full rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold gap-2 flex items-center justify-center text-xs shadow-md shadow-emerald-600/10 py-2.5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-4 w-4">
                                           <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.387a12.035 12.035 0 0 1-7.108-7.108c-.145-.44.02-.927.396-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
                                         </svg>
-                                        <span>Call Customer ({order.deliveryPhone})</span>
+                                        <span>Call Customer Now ({order.deliveryPhone || "N/A"})</span>
                                       </Button>
                                     </a>
                                   </div>

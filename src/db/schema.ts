@@ -100,6 +100,7 @@ export const addresses = sqliteTable("addresses", {
   city: text("city").notNull(),
   state: text("state").notNull(),
   pincode: text("pincode").notNull(),
+  phone: text("phone"), // delivery phone number for address
   isDefault: integer("is_default").default(0).notNull(),
   createdAt: text("created_at").default(sql`(CURRENT_TIMESTAMP)`).notNull(),
   updatedAt: text("updated_at").default(sql`(CURRENT_TIMESTAMP)`).notNull(),

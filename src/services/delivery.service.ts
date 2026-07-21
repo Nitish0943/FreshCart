@@ -143,10 +143,11 @@ export class DeliveryService {
     for (const batch of activeBatches) {
       const ordersInBatch = await orderRepository.findOrdersByBatchId(batch.id);
       const ordersWithAssignments = [];
-      for (const order of ordersInBatch) {
-        const assignment = await deliveryRepository.findAssignmentByOrderAndRider(order.id, rider.id);
+      for (const o of ordersInBatch) {
+        const fullOrder = await orderRepository.findOrderById(o.id);
+        const assignment = await deliveryRepository.findAssignmentByOrderAndRider(o.id, rider.id);
         ordersWithAssignments.push({
-          ...order,
+          ...(fullOrder || o),
           assignment,
         });
       }
